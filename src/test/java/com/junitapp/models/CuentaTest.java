@@ -1,8 +1,12 @@
 package com.junitapp.models;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.*;
+
+import com.junitapp.exceptions.DineroInsuficienteException;
 
 class CuentaTest {
 	
@@ -53,9 +57,23 @@ class CuentaTest {
 		Cuenta cuenta = new Cuenta("Andres", new BigDecimal("1000.12345"));
 		cuenta.credito(new BigDecimal("100"));
 		
-		Assertions.assertNotNull(cuenta.getSaldo());
-		Assertions.assertEquals(1100.12345, cuenta.getSaldo().doubleValue());
-		Assertions.assertEquals("1100.12345", cuenta.getSaldo().toPlainString());
+		assertNotNull(cuenta.getSaldo());
+		assertEquals(1100.12345, cuenta.getSaldo().doubleValue());
+		assertEquals("1100.12345", cuenta.getSaldo().toPlainString());
+	}
+	
+	@Test
+	void testDineroInsuficienteExceptionCuenta() {
+		Cuenta cuenta = new Cuenta("Andres", new BigDecimal("1000.12345"));
+		Exception excepcion = assertThrows(DineroInsuficienteException.class, () -> {
+			cuenta.debito(new BigDecimal("1500"));
+		});
+		
+		String actual = excepcion.getMessage();
+		String esperado = "Dinero Insuficiente";
+		
+		assertEquals(esperado, actual);
+		
 	}
 	
 }
