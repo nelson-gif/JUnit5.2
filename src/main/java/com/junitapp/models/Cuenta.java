@@ -9,7 +9,7 @@ public class Cuenta {
 	
 	private String persona;
 	private BigDecimal saldo;
-	
+	private Banco banco;
 	
 	
 	public Cuenta(String persona, BigDecimal saldo) {
@@ -33,6 +33,14 @@ public class Cuenta {
 		this.saldo = saldo;
 	}
 	
+	public Banco getBanco() {
+		return banco;
+	}
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
+	}
+
 	public void debito(BigDecimal monto) {
 		BigDecimal nuevoSaldo = this.saldo.subtract(monto);
 		
@@ -65,6 +73,4 @@ public class Cuenta {
 		return Objects.equals(persona, other.persona) && Objects.equals(saldo, other.saldo);
 	}
 	
-	
-
 }

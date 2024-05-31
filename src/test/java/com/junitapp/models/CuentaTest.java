@@ -76,4 +76,52 @@ class CuentaTest {
 		
 	}
 	
+	@Test
+	void testTransferirDineroCuentas() {
+		Cuenta cuenta1 = new Cuenta("Jhon Doe", new BigDecimal("2500"));
+		Cuenta cuenta2 = new Cuenta("Andres", new BigDecimal("1500.8989"));
+		Banco banco = new Banco();
+		banco.setNombre("Bando del Estado");
+		banco.transferir(cuenta2, cuenta1, new BigDecimal("500"));
+		
+		assertEquals("1000.8989",cuenta2.getSaldo().toPlainString());
+		assertEquals("3000",cuenta1.getSaldo().toPlainString());
+	}
+	
+	@Test
+	void testRelacionBancoCuentas() {
+		Cuenta cuenta1 = new Cuenta("Jhon Doe", new BigDecimal("2500"));
+		Cuenta cuenta2 = new Cuenta("Andres", new BigDecimal("1500.8989"));
+		
+		Banco banco = new Banco();
+		banco.addCuenta(cuenta1);
+		banco.addCuenta(cuenta2);
+		banco.setNombre("Banco del Estado");
+		banco.transferir(cuenta2, cuenta1, new BigDecimal("500"));
+		
+		assertEquals("1000.8989",cuenta2.getSaldo().toPlainString());
+		assertEquals("3000",cuenta1.getSaldo().toPlainString());
+		
+		assertEquals(2, banco.getCuentas().size());//verifying we only have 2 acc in the bank
+		assertEquals("Banco del Estado", cuenta1.getBanco().getNombre()); //validating this acc belongs to Banco del Estado
+		
+		 //validating there is an account under the name andres
+		assertEquals("Andres", banco.getCuentas().stream()
+				.filter(  cuenta -> cuenta.getPersona().equals("Andres"))
+				.findFirst()
+				.get().getPersona()
+				);
+		//validating there is an account under the name andres, mismo codigo de arriba pero usando assertTrue
+		assertTrue(banco.getCuentas().stream()
+				.filter(  cuenta -> cuenta.getPersona().equals("Andres"))
+				.findFirst().isPresent()
+				);
+		
+		//validating there is an account under the name andres, mismo codigo de arriba pero usando anyMatch en vez de is present
+				assertTrue(banco.getCuentas().stream()
+					.anyMatch(cuenta -> cuenta.getPersona().equals("John Doe"))
+				);
+		
+	}
+	
 }
