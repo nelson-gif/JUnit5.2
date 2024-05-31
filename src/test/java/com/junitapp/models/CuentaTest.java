@@ -12,13 +12,15 @@ class CuentaTest {
 	
 	@Test
 	void testNombreCuenta() {
-		Cuenta cuenta = new Cuenta("Andres", new BigDecimal("1000.2343"));
+		Cuenta cuenta = new Cuenta("Andres as", new BigDecimal("1000.2343"));
 //		cuenta.setPersona("Andres1");
 		String esperado = "Andres";
 		String real = cuenta.getPersona();
-		Assertions.assertNotNull(real);
-		Assertions.assertTrue(esperado.equals(cuenta.getPersona()));
-		Assertions.assertEquals(esperado, real);
+		Assertions.assertNotNull(real, () -> "el nombre no puede ser nulo");
+		Assertions.assertTrue(esperado.equals(cuenta.getPersona()), () -> { return "Elnombre de la cuenta no es el esperado, "
+				+ "se esperaba: "+esperado+", pero se obtuvo: "+ real;
+				});
+		Assertions.assertEquals(esperado, real, () -> "nombre esperado debe ser igual al actual");
 	}
 	
 	@Test
@@ -99,28 +101,46 @@ class CuentaTest {
 		banco.setNombre("Banco del Estado");
 		banco.transferir(cuenta2, cuenta1, new BigDecimal("500"));
 		
-		assertEquals("1000.8989",cuenta2.getSaldo().toPlainString());
-		assertEquals("3000",cuenta1.getSaldo().toPlainString());
-		
-		assertEquals(2, banco.getCuentas().size());//verifying we only have 2 acc in the bank
-		assertEquals("Banco del Estado", cuenta1.getBanco().getNombre()); //validating this acc belongs to Banco del Estado
-		
-		 //validating there is an account under the name andres
-		assertEquals("Andres", banco.getCuentas().stream()
-				.filter(  cuenta -> cuenta.getPersona().equals("Andres"))
-				.findFirst()
-				.get().getPersona()
-				);
-		//validating there is an account under the name andres, mismo codigo de arriba pero usando assertTrue
-		assertTrue(banco.getCuentas().stream()
-				.filter(  cuenta -> cuenta.getPersona().equals("Andres"))
-				.findFirst().isPresent()
-				);
-		
-		//validating there is an account under the name andres, mismo codigo de arriba pero usando anyMatch en vez de is present
+		assertAll( () -> {
+				assertEquals("1000.8989",cuenta2.getSaldo().toPlainString(), 
+						() -> "El saldo de la cuenta2 no es el esperado");			
+			}, 
+			() -> {
+				assertEquals("3000",cuenta1.getSaldo().toPlainString(), 
+						() -> "El saldo de la cuenta1 no es el esperado");				
+			}, 
+			() -> {				
+				assertEquals(2, banco.getCuentas().size(), 
+						() -> "El banco no tiene las cuentas esperadas");//verifying we only have 2 acc in the bank
+			},
+			() -> {
+				assertEquals("Banco del Estado", cuenta1.getBanco().getNombre(),
+						() -> "La cuenta 1 no pertenece al banco del estado"); //validating this acc belongs to Banco del Estado
+			},
+			() -> {				
+				//validating there is an account under the name andres
+				assertEquals("Andres", banco.getCuentas().stream()
+						.filter(  cuenta -> cuenta.getPersona().equals("Andres"))
+						.findFirst()
+						.get().getPersona(),
+						() -> "No existe cuenta a nombre de Andres"
+						);
+			},
+			() -> {				
+				//validating there is an account under the name andres, mismo codigo de arriba pero usando assertTrue
 				assertTrue(banco.getCuentas().stream()
-					.anyMatch(cuenta -> cuenta.getPersona().equals("John Doe"))
-				);
+						.filter(  cuenta -> cuenta.getPersona().equals("Andres"))
+						.findFirst().isPresent()
+						);
+			},
+			() -> {				
+				//validating there is an account under the name andres, mismo codigo de arriba pero usando anyMatch en vez de is present
+				assertTrue(banco.getCuentas().stream()
+						.anyMatch(cuenta -> cuenta.getPersona().equals("Jhon Doe"))
+						);
+			}
+			
+			);
 		
 	}
 	
