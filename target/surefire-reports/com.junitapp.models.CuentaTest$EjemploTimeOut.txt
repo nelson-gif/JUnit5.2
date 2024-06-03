@@ -1,0 +1,45 @@
+-------------------------------------------------------------------------------
+Test set: com.junitapp.models.CuentaTest$EjemploTimeOut
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 11.05 s <<< FAILURE! -- in com.junitapp.models.CuentaTest$EjemploTimeOut
+com.junitapp.models.CuentaTest$EjemploTimeOut.pruebaTimeOut2 -- Time elapsed: 0.521 s <<< ERROR!
+java.util.concurrent.TimeoutException: pruebaTimeOut2() timed out after 500 milliseconds
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	Suppressed: java.lang.InterruptedException: sleep interrupted
+		at java.base/java.lang.Thread.sleep0(Native Method)
+		at java.base/java.lang.Thread.sleep(Thread.java:558)
+		at java.base/java.util.concurrent.TimeUnit.sleep(TimeUnit.java:446)
+		at com.junitapp.models.CuentaTest$EjemploTimeOut.pruebaTimeOut2(CuentaTest.java:385)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		... 3 more
+
+com.junitapp.models.CuentaTest$EjemploTimeOut.pruebaTimeOut -- Time elapsed: 5.003 s <<< ERROR!
+java.util.concurrent.TimeoutException: pruebaTimeOut() timed out after 5 seconds
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	Suppressed: java.lang.InterruptedException: sleep interrupted
+		at java.base/java.lang.Thread.sleep0(Native Method)
+		at java.base/java.lang.Thread.sleep(Thread.java:558)
+		at java.base/java.util.concurrent.TimeUnit.sleep(TimeUnit.java:446)
+		at com.junitapp.models.CuentaTest$EjemploTimeOut.pruebaTimeOut(CuentaTest.java:379)
+		at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+		... 3 more
+
+com.junitapp.models.CuentaTest$EjemploTimeOut.testTimeOutAssertions -- Time elapsed: 5.516 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: execution exceeded timeout of 5000 ms by 512 ms
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTimeout.assertTimeout(AssertTimeout.java:81)
+	at org.junit.jupiter.api.AssertTimeout.assertTimeout(AssertTimeout.java:57)
+	at org.junit.jupiter.api.AssertTimeout.assertTimeout(AssertTimeout.java:39)
+	at org.junit.jupiter.api.AssertTimeout.assertTimeout(AssertTimeout.java:35)
+	at org.junit.jupiter.api.Assertions.assertTimeout(Assertions.java:3294)
+	at com.junitapp.models.CuentaTest$EjemploTimeOut.testTimeOutAssertions(CuentaTest.java:390)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
